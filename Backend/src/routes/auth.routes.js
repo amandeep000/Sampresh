@@ -3,12 +3,12 @@ import {
   userSignup,
   userLogin,
   userLogout,
-} from "../controllers/user.controllers.js";
+} from "../controllers/user.controller.js";
 
 const router = Router();
 
-router.route("/signup").get(userSignup);
-router.route("/login").get(userLogin);
-router.route("/logout").get(userLogout);
+router.route("/signup").post(userSignup);
+router.route("/login").post(userLogin);
+router.route("/logout").post(userLogout);
 
 export default router;
