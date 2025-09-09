@@ -3,12 +3,17 @@ import {
   userSignup,
   userLogin,
   userLogout,
-} from "../controllers/user.controller.js";
+  updateProfile,
+  checkAuth,
+} from "../controllers/userAuth.controller.js";
+import verifyJWT from "../middlewares/auth.middleware.js";
 
 const router = Router();
 
 router.route("/signup").post(userSignup);
 router.route("/login").post(userLogin);
-router.route("/logout").post(userLogout);
+router.route("/logout").post(verifyJWT, userLogout);
+router.route("/update-profile").put(verifyJWT, updateProfile);
+router.route("/check").get(verifyJWT, checkAuth);
 
 export default router;
