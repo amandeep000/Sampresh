@@ -1,7 +1,8 @@
+import express from "express";
+import cookieParser from "cookie-parser";
 import authRoutes from "./src/routes/auth.routes.js";
 import healthRouter from "./src/routes/healthCheck.routes.js";
-import cookieParser from "cookie-parser";
-import express from "express";
+import messageRouter from "./src/routes/message.route.js";
 
 const app = express();
 // Global middlewares
@@ -12,5 +13,6 @@ app.use(cookieParser());
 // Routes
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/healthCheck", healthRouter);
+app.use("/api/v1/message");
 
 export default app;
