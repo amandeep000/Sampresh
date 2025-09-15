@@ -4,6 +4,7 @@ import { ApiResponse } from "../utils/apiResponse.utils.js";
 import User from "../models/user.model.js";
 import mongoose from "mongoose";
 import Message from "../models/message.model.js";
+import cloudinary from "../utils/cloudinary.util.js";
 
 const getUserForSidebar = asyncHandler(async (req, res) => {
   if (!req.user._id) {
@@ -48,4 +49,33 @@ const getMessages = asyncHandler(async (req, res) => {
   res.status(200).json(messages);
 });
 
-export { getUserForSidebar, getMessages };
+const sendMessage = asyncHandler(async (req, res) => {
+  const { text, image } = req.body;
+  const { id: receiverId } = req.params;
+  const senderId = req.user._id;
+
+  let imageURL;
+  if (image) {
+    const uploadResponse = await cloudinary.uploader.upload(image);
+    imageURL = uploadResponse.secure_url;
+  }
+
+  const newMessage = new Message({
+    senderId,
+    receiverId,
+    text,
+    image: imageURL,
+  });
+
+  await newMessage.save();
+
+  // realtime functionality will be happening here hehe...
+
+  res
+    .status(201)
+    .json(
+      new ApiResponse(201, newMessage, "Message and media sent successfully")
+    );
+});
+
+export { getUserForSidebar, getMessages, sendMessage };
