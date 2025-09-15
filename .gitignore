@@ -1,0 +1,12 @@
+# Node modules everywhere
+node_modules/
+
+# Logs
+*.log
+
+# Env files
+.env
+.env.local
+
+# OS files
+.DS_Store
