@@ -13,6 +13,6 @@ app.use(cookieParser());
 // Routes
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/healthCheck", healthRouter);
-app.use("/api/v1/message");
+app.use("/api/v1/message", messageRouter);
 
 export default app;
