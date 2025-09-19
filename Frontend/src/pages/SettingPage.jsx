@@ -14,7 +14,7 @@ const PREVIEW_MESSAGES = [
 const SettingPage = () => {
   const { theme, setTheme } = useThemeStore();
   return (
-    <div className="h-screen container mx-auto px-4 pt-20 max-w-5xl">
+    <div className="h-full container mx-auto px-4 pt-20 max-w-5xl">
       <div className="space-y-6">
         <div className="flex flex-col gap-1">
           <h2 className="text-lg font-semibold">Theme</h2>
@@ -28,7 +28,7 @@ const SettingPage = () => {
             <button
               key={t}
               className={`
-                group flex flex-col items-center gap-1.5 p-2 rounded-lg transition-colors
+                group flex flex-col items-center gap-1.5 p-2 rounded-lg cursor-pointer transition-colors
                 ${theme === t ? "bg-base-200" : "hover:bg-base-200/50"}
               `}
               onClick={() => setTheme(t)}
@@ -38,7 +38,7 @@ const SettingPage = () => {
                 data-theme={t}
               >
                 <div className="absolute inset-0 grid grid-cols-4 gap-px p-1">
-                  <div className="rounded bg-primary"></div>
+                  <div className="rounded bg-primary "></div>
                   <div className="rounded bg-secondary"></div>
                   <div className="rounded bg-accent"></div>
                   <div className="rounded bg-neutral"></div>
