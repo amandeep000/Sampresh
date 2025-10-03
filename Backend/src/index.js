@@ -1,6 +1,6 @@
 import dotenv from "dotenv";
 import { connectDB } from "./db/index.js";
-import app from "../app.js";
+import { server } from "./lib/socket.js";
 
 dotenv.config();
 const PORT = process.env.PORT;
@@ -8,7 +8,7 @@ const PORT = process.env.PORT;
 const startServer = async () => {
   try {
     await connectDB();
-    app.listen(PORT, () => {
+    server.listen(PORT, () => {
       console.log("Server is now listening on port: ", PORT);
     });
   } catch (error) {
