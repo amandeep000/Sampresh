@@ -5,6 +5,7 @@ import User from "../models/user.model.js";
 import mongoose from "mongoose";
 import Message from "../models/message.model.js";
 import cloudinary from "../utils/cloudinary.util.js";
+import { getReceiverSocketId, getIO } from "../lib/socket.js";
 
 const getUserForSidebar = asyncHandler(async (req, res) => {
   if (!req.user._id) {
@@ -39,11 +40,10 @@ const getMessages = asyncHandler(async (req, res) => {
     ],
   }).select("-__v");
 
-  if (messages.length === 0) {
-    throw new ApiError(
-      404,
-      "No messages found between you and the other user. Start a new conversation!"
-    );
+  if (!messages.length) {
+    return res
+      .status(200)
+      .json(new ApiResponse(200, [], "No messages yet — start chatting!"));
   }
 
   res.status(200).json(messages);
@@ -70,6 +70,11 @@ const sendMessage = asyncHandler(async (req, res) => {
   await newMessage.save();
 
   // realtime functionality will be happening here hehe...
+  const receiverSocketId = getReceiverSocketId(receiverId);
+  const io = getIO();
+  if (receiverSocketId) {
+    io.to(receiverSocketId).emit("newMessage", newMessage);
+  }
 
   res
     .status(201)

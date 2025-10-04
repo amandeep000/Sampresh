@@ -4,8 +4,8 @@ import authRoutes from "./src/routes/auth.routes.js";
 import healthRouter from "./src/routes/healthCheck.routes.js";
 import messageRouter from "./src/routes/message.route.js";
 import cors from "cors";
-import { app } from "./src/lib/socket.js";
 
+const app = express();
 app.use(
   cors({
     origin: "http://localhost:5173",
@@ -22,5 +22,4 @@ app.use(cookieParser());
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/healthCheck", healthRouter);
 app.use("/api/v1/message", messageRouter);
-
 export default app;
