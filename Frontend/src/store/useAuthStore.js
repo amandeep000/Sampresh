@@ -63,7 +63,7 @@ export const useAuthStore = create((set, get) => ({
     set({ isLoggingIn: true });
     try {
       const res = await axiosInstance.post("/auth/login", data);
-      set({ authUser: res.data });
+      set({ authUser: res.data.data });
       toast.success("Logged in successfully!");
 
       get().connectSocket();
@@ -96,8 +96,24 @@ export const useAuthStore = create((set, get) => ({
   connectSocket: () => {
     const { authUser } = get();
     if (!authUser || get().socket?.connected) return;
-    const socket = io(import.meta.env.VITE_BASE_URL);
+    const socket = io(import.meta.env.VITE_BASE_URL, {
+      query: {
+        userId: authUser._id,
+      },
+    });
+    console.log("Connecting users with userIds: ", authUser._id);
     socket.connect();
+    set({ socket: socket });
+
+    socket.on("getOnlineUsers", (userIds) => {
+      console.log(
+        "These are the userIds from the backend of onlineUsers: ",
+        userIds
+      );
+      set({ onlineUsers: userIds });
+    });
   },
-  disconnectSocket: () => {},
+  disconnectSocket: () => {
+    if (get().socket?.connected) get().socket.disconnect();
+  },
 }));

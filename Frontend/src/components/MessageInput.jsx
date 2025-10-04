@@ -1,9 +1,10 @@
 import React, { useRef, useState } from "react";
 import useChatStore from "../store/useChatStore";
 import toast from "react-hot-toast";
+import { Send, Image, X } from "lucide-react";
 
 const MessageInput = () => {
-  const [text, setText] = useState(null);
+  const [text, setText] = useState("");
   const fileInputRef = useRef(null);
   const [imagePreview, setImagePreview] = useState(null);
   const { sendMessage } = useChatStore();
@@ -18,6 +19,7 @@ const MessageInput = () => {
     reader.onloadend = () => {
       setImagePreview(reader.result);
     };
+    reader.readAsDataURL(file);
   };
 
   const removeImage = () => {
@@ -27,7 +29,7 @@ const MessageInput = () => {
 
   const handleSendMessage = async (e) => {
     e.preventDefault();
-    if (!text.trim() || !imagePreview) return;
+    if (!text.trim() && !imagePreview) return;
     try {
       await sendMessage({
         text: text.trim(),
