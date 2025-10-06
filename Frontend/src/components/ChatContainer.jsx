@@ -57,7 +57,7 @@ const ChatContainer = () => {
   }
 
   return (
-    <div className="flex-1 flex flex-col overflow-scroll h-screen">
+    <div className="flex-1 flex flex-col overflow-auto">
       <ChatHeader />
 
       <div className="flex-1 overflow-y-auto p-4 space-y-4">
@@ -75,8 +75,8 @@ const ChatContainer = () => {
                   <img
                     src={
                       message.senderId === authUser._id
-                        ? authUser.profilePic || "/avatar.png"
-                        : selectedUser.profilePic || "/avatar.png"
+                        ? authUser.avatar || "/avatar.png"
+                        : selectedUser.avatar || "/avatar.png"
                     }
                     alt="profile pic"
                   />

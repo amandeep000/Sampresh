@@ -42,8 +42,10 @@ export const useAuthStore = create((set, get) => ({
         error.response?.data?.message ||
         error.message ||
         "Something went wrong!";
-      toast.error(errorMessage);
-      console.error("There was an error while submitting the form: ", error);
+      console.error(
+        "There was an error while submitting the form: ",
+        errorMessage
+      );
     } finally {
       set({ isSigningUp: false });
     }
@@ -105,15 +107,10 @@ export const useAuthStore = create((set, get) => ({
         userId: authUser._id,
       },
     });
-    console.log("Connecting users with userIds: ", authUser._id);
     socket.connect();
     set({ socket: socket });
 
     socket.on("getOnlineUsers", (userIds) => {
-      console.log(
-        "These are the userIds from the backend of onlineUsers: ",
-        userIds
-      );
       set({ onlineUsers: userIds });
     });
   },

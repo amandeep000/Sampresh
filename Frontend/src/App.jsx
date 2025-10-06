@@ -14,15 +14,13 @@ import { Navigate } from "react-router-dom";
 import { Toaster } from "react-hot-toast";
 
 function App() {
-  const { authUser, checkAuth, isCheckingAuth, onlineUsers } = useAuthStore();
+  const { authUser, checkAuth, isCheckingAuth } = useAuthStore();
   const { theme } = useThemeStore();
 
-  console.log("Online usersL ", onlineUsers);
   useEffect(() => {
     checkAuth();
   }, [checkAuth]);
 
-  console.log({ authUser });
   if (isCheckingAuth && !authUser) {
     return (
       <div className="w-full h-screen flex justify-center items-center">

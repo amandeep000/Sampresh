@@ -45,7 +45,7 @@ const Sidebar = () => {
         </div>
       </div>
 
-      <div className="overflow-y-scroll h-screen w-full py-3">
+      <div className="overflow-y-auto w-full py-3">
         {filteredUsers.map((user) => (
           <button
             key={user._id}
@@ -76,9 +76,7 @@ const Sidebar = () => {
 
             {/* User info - only visible on larger screens */}
             <div className="hidden lg:block text-left min-w-0">
-              <div className="font-medium truncate capitalize">
-                {user.fullname}
-              </div>
+              <div className="font-medium truncate">{user.fullname}</div>
               <div className="text-sm text-zinc-400">
                 {onlineUsers.includes(user._id) ? "Online" : "Offline"}
               </div>

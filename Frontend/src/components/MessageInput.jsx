@@ -74,6 +74,7 @@ const MessageInput = () => {
             className="w-full input input-bordered rounded-lg input-sm sm:input-md"
             placeholder="Type a message..."
             value={text}
+            autoFocus
             onChange={(e) => setText(e.target.value)}
           />
           <input
